@@ -12,6 +12,17 @@ const loadAccount = (filename) => {
   return account
 }
 
+// save an account to a json file on disk
+const saveAccount = (account, filename) => {
+  const data = JSON.stringify({
+    publicKey: Array.from(account._keypair.publicKey),
+    secretKey: Array.from(account._keypair.secretKey),
+  })
+
+  fs.writeFileSync(filename, data)
+}
+
+// Send Sols from a source account to destination account - in one async function call
 const sendSol = async ({ connection, source, dest, amount, commitment = 'root' }) => {
   const tx = new Transaction({
     feePayer: source.publicKey,
@@ -31,18 +42,6 @@ const sendSol = async ({ connection, source, dest, amount, commitment = 'root' }
   return await sendAndConfirmTransaction(connection, tx, [source], {
     commitment,
   })
-}
-
-new Account()
-
-// save an account to a json file on disk
-const saveAccount = (account, filename) => {
-  const data = JSON.stringify({
-    publicKey: Array.from(account._keypair.publicKey),
-    secretKey: Array.from(account._keypair.secretKey),
-  })
-
-  fs.writeFileSync(filename, data)
 }
 
 export { solToLamp, lampToSol, loadAccount, saveAccount, sendSol }
