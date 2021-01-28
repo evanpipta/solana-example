@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "airdrop": "AIRDROP=true node src/index.mjs",
     "start": "node src/index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
